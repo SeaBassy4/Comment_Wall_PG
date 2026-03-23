@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comment Wall App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Muro de Comentarios</h1>
+      </header>
+
+      <section class="form-section">
+        <form id="commentForm">
+          <div class="input-group">
+            <label for="username">Usuario</label>
+            <input type="text" id="username" placeholder="Tu nombre" required />
+          </div>
+          <div class="input-group">
+            <label for="message">Comentario</label>
+            <textarea
+              id="message"
+              placeholder="Escribe algo."
+              required
+            ></textarea>
+          </div>
+          <button type="submit" id="submitBtn">Publicar</button>
+        </form>
+      </section>
+
+      <section class="comments-section">
+        <h2>Comentarios Recientes</h2>
+        <div id="commentsList" class="comments-list"></div>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
