@@ -9,14 +9,19 @@
   <body>
     <div class="container">
       <header>
-        <h1>Muro de Comentarios</h1>
+        <h1>Forum Wall</h1>
       </header>
-
       <section class="form-section">
         <form id="commentForm">
           <div class="input-group">
             <label for="username">Usuario</label>
-            <input type="text" id="username" placeholder="Tu nombre" required />
+            <input
+              type="text"
+              id="username"
+              placeholder="Tu nombre"
+              required
+              maxlength="50"
+            />
           </div>
           <div class="input-group">
             <label for="message">Comentario</label>
@@ -24,6 +29,8 @@
               id="message"
               placeholder="Escribe algo."
               required
+              minlength="5"
+              maxlength="300"
             ></textarea>
           </div>
           <button type="submit" id="submitBtn">Publicar</button>

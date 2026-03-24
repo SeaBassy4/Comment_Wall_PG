@@ -1,6 +1,3 @@
-// ==========================================
-// 1. LÓGICA DE API (Fetch)
-// ==========================================
 const API_URL = "http://localhost:3000/comments";
 
 const API = {
@@ -44,9 +41,6 @@ const API = {
   },
 };
 
-// ==========================================
-// 2. LÓGICA DE UI (DOM y Formateo)
-// ==========================================
 const UI = {
   commentsList: document.getElementById("commentsList"),
   form: document.getElementById("commentForm"),
@@ -80,12 +74,8 @@ const UI = {
       return;
     }
 
-    // Ordenar del más reciente al más antiguo
-    const sortedComments = comments.sort(
-      (a, b) => new Date(b.date) - new Date(a.date),
-    );
-
-    sortedComments.forEach((comment) => {
+    // El backend ya envía los datos ordenados, iteramos directamente
+    comments.forEach((comment) => {
       const card = document.createElement("div");
       card.className = "comment-card";
       card.innerHTML = `
@@ -96,7 +86,7 @@ const UI = {
                 <div class="comment-body">
                     <p>${comment.message}</p>
                 </div>
-                <button class="delete-btn" data-id="${comment.id}">Eliminar</button>
+                <button class="delete-btn" data-id="${comment._id}">Eliminar</button>
             `;
       this.commentsList.appendChild(card);
     });
@@ -107,9 +97,6 @@ const UI = {
   },
 };
 
-// ==========================================
-// 3. CONTROLADOR PRINCIPAL (Validaciones y Eventos)
-// ==========================================
 const App = {
   async init() {
     // Cargar comentarios al iniciar
@@ -147,8 +134,12 @@ const App = {
       alert("El nombre de usuario no puede estar vacío.");
       return;
     }
-    if (message.length < 5) {
-      alert("El mensaje debe tener al menos 5 caracteres.");
+    if (username.length > 50) {
+      alert("El nombre de usuario no puede tener más de 50 caracteres.");
+      return;
+    }
+    if (message.length < 5 || message.length > 300) {
+      alert("El mensaje debe tener entre 5 y 300 caracteres.");
       return;
     }
 
@@ -183,5 +174,4 @@ const App = {
   },
 };
 
-// Iniciar la aplicación cuando el DOM esté listo
 document.addEventListener("DOMContentLoaded", () => App.init());
