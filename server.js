@@ -16,7 +16,7 @@ mongoose
   .then(() => console.log("✅ Conectado a MongoDB Atlas"))
   .catch((err) => console.error("❌ Error al conectar a MongoDB:", err));
 
-// GET - Obtener todos los comentarios
+// GET
 app.get("/comments", async (req, res) => {
   try {
     const comments = await Comment.find().sort({ date: -1 }); // Ordenar del más nuevo al más viejo
@@ -26,12 +26,11 @@ app.get("/comments", async (req, res) => {
   }
 });
 
-// POST - Crear un comentario
+// POST
 app.post("/comments", async (req, res) => {
   try {
     const { username, message } = req.body;
 
-    // Validación estricta en el Backend
     if (!username || username.trim().length === 0 || username.length > 50) {
       return res
         .status(400)
@@ -55,7 +54,7 @@ app.post("/comments", async (req, res) => {
   }
 });
 
-// DELETE - Eliminar un comentario
+// DELETE
 app.delete("/comments/:id", async (req, res) => {
   try {
     await Comment.findByIdAndDelete(req.params.id);
@@ -66,7 +65,12 @@ app.delete("/comments/:id", async (req, res) => {
 });
 
 // Iniciar servidor
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+  });
+}
+
+// Exportar la aplicación para que Vercel la procese como Serverless Function
+module.exports = app;

@@ -1,4 +1,8 @@
-const API_URL = "http://localhost:3000/comments";
+const API_URL =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+    ? "http://localhost:3000/comments"
+    : "/comments";
 
 const API = {
   async getComments() {
@@ -74,7 +78,6 @@ const UI = {
       return;
     }
 
-    // El backend ya envía los datos ordenados, iteramos directamente
     comments.forEach((comment) => {
       const card = document.createElement("div");
       card.className = "comment-card";
