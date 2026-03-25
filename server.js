@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path"); // NUEVO: Para manejar rutas de archivos
 const Comment = require("./models/Comment");
 
 const app = express();
@@ -16,10 +17,29 @@ mongoose
   .then(() => console.log("✅ Conectado a MongoDB Atlas"))
   .catch((err) => console.error("❌ Error al conectar a MongoDB:", err));
 
+// ==========================================
+// RUTAS DEL FRONTEND (Entregando archivos)
+// ==========================================
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+app.get("/styles.css", (req, res) => {
+  res.sendFile(path.join(__dirname, "styles.css"));
+});
+
+app.get("/app.js", (req, res) => {
+  res.sendFile(path.join(__dirname, "app.js"));
+});
+
+// ==========================================
+// ENDPOINTS DE LA API (Base de datos)
+// ==========================================
+
 // GET
 app.get("/comments", async (req, res) => {
   try {
-    const comments = await Comment.find().sort({ date: -1 }); // Ordenar del más nuevo al más viejo
+    const comments = await Comment.find().sort({ date: -1 });
     res.json(comments);
   } catch (error) {
     res.status(500).json({ message: error.message });
