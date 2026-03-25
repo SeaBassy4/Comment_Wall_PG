@@ -1,4 +1,3 @@
-// Apuntando a tu backend en Render
 const API_URL = "https://taskmanager-pg-back.onrender.com/comments";
 
 const API = {
