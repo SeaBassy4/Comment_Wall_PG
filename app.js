@@ -1,8 +1,5 @@
-const API_URL =
-  window.location.hostname === "localhost" ||
-  window.location.hostname === "127.0.0.1"
-    ? "http://localhost:3000/comments"
-    : "/comments";
+// Apuntando a tu backend en Render
+const API_URL = "https://taskmanager-pg-back.onrender.com/comments";
 
 const API = {
   async getComments() {
@@ -122,17 +119,16 @@ const App = {
       const comments = await API.getComments();
       UI.renderComments(comments);
     } catch (error) {
-      alert("Hubo un problema al cargar los comentarios.");
+      console.error("Hubo un problema al cargar los comentarios.");
     }
   },
 
   async handlePost(e) {
-    e.preventDefault(); // Evita que la página se recargue
+    e.preventDefault();
 
     const username = UI.usernameInput.value.trim();
     const message = UI.messageInput.value.trim();
 
-    // Validaciones obligatorias
     if (!username) {
       alert("El nombre de usuario no puede estar vacío.");
       return;
@@ -155,7 +151,7 @@ const App = {
     try {
       await API.createComment(newComment);
       UI.clearForm();
-      await this.loadComments(); // Refrescar lista dinámicamente
+      await this.loadComments();
     } catch (error) {
       alert("No se pudo publicar el comentario.");
     }
@@ -169,7 +165,7 @@ const App = {
     if (confirmacion) {
       try {
         await API.deleteComment(id);
-        await this.loadComments(); // Refrescar lista dinámicamente
+        await this.loadComments();
       } catch (error) {
         alert("No se pudo eliminar el comentario.");
       }
